@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jaipur Expenses</title>
+    <title>Jaipur Expenses Breakdown</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -15,76 +15,95 @@
         <header class="header blur-effect">
             <div class="logo">
                 <h1>Jaipur Expenses</h1>
-                <p>Trip settlement analysis dashboard</p>
+                <p>Personalized Exact Tracking</p>
             </div>
-            <div class="total-badge">
-                <span class="label">Total Spend</span>
+            <div class="total-badge" id="global-total-badge">
+                <span class="label">Total Group Spend</span>
                 <span class="amount" id="total-spend">₹0</span>
             </div>
         </header>
 
+        <!-- Person Selector -->
+        <div class="tabs-container" id="tabs-container">
+            <button class="person-tab active" data-person="Group">Global Group View</button>
+            <button class="person-tab" data-person="Vishu">Vishu</button>
+            <button class="person-tab" data-person="Chris">Chris</button>
+            <button class="person-tab" data-person="Daddy">Daddy</button>
+            <button class="person-tab" data-person="Mommy">Mommy</button>
+            <button class="person-tab" data-person="Vipul">Vipul</button>
+        </div>
+
         <main class="dashboard">
-            <!-- Balances Section -->
-            <section class="section">
-                <div class="section-title">
-                    <h2>Final Balances</h2>
-                </div>
-                <div class="card-grid" id="balances-grid">
-                    <!-- Dynamic Balance Cards -->
-                </div>
-            </section>
 
-            <!-- Settlements Section -->
-            <section class="section">
-                <div class="section-title">
-                    <h2>Suggested Settlements</h2>
-                    <p>The easiest way to square up everyone's debt.</p>
+            <!-- ===================== PERSONAL VIEW ===================== -->
+            <!-- Stats Row -->
+            <div class="stats-grid" id="personal-stats">
+                <div class="stat-box blur-effect">
+                    <div class="title">You Total Paid</div>
+                    <div class="val color-blue" id="p-paid">₹0</div>
                 </div>
-                <div class="settlements-list" id="settlements-list">
-                    <!-- Dynamic Settlement Items -->
+                <div class="stat-box blur-effect">
+                    <div class="title">Your Personal Share</div>
+                    <div class="val" id="p-share">₹0</div>
                 </div>
-            </section>
+                <div class="stat-box blur-effect">
+                    <div class="title">Overall Net Balance</div>
+                    <div class="val" id="p-net">₹0</div>
+                    <div id="p-net-status" style="font-size: 0.8rem; font-weight: 600; margin-top: 0.3rem"></div>
+                </div>
+            </div>
 
-            <!-- Paid By Section -->
-            <section class="section">
+            <!-- Exact Breakdown Lists -->
+            <div class="exact-settlements" id="personal-breakdowns">
                 <div class="section-title">
-                    <h2>Who Paid What?</h2>
+                    <h2>Exact Individual Balances</h2>
+                    <p>Forget simplified math. Here is EXACTLY who you need to give money to, and who owes you based safely on real receipts.</p>
                 </div>
-                <div class="chart-container blur-effect">
-                    <div class="bars" id="paid-bars">
-                        <!-- Dynamic Progress Bars -->
+
+                <div class="owe-block" id="block-you-owe">
+                    <h3><span style="color:#ef4444">↓</span> People You Must Pay</h3>
+                    <div id="content-you-owe"></div>
+                </div>
+
+                <div class="owe-block" id="block-owes-you">
+                    <h3><span style="color:#10b981">↑</span> People Who Owe You</h3>
+                    <div id="content-owes-you"></div>
+                </div>
+            </div>
+
+            <!-- ===================== GLOBAL VIEW ===================== -->
+            <div class="global-view" id="global-overview">
+                <!-- Group Overview Charts -->
+                <section class="section">
+                    <div class="section-title">
+                        <h2>Overall Trip Standings</h2>
+                        <p>A quick summary of everyones net position for the entire trip.</p>
                     </div>
-                </div>
-            </section>
+                    <div class="card-grid" id="balances-grid"></div>
+                </section>
 
-            <!-- Detailed Transactions -->
-            <section class="section">
-                <div class="section-title">
-                    <h2>Every Expense Item</h2>
-                    <p>Detailed breakdown of who paid for what and who it was split amongst.</p>
-                </div>
-                <div class="transactions-container" id="transactions-list">
-                    <!-- Dynamic Transaction Cards Generate Here -->
-                </div>
-            </section>
+                <section class="section">
+                    <div class="section-title">
+                        <h2>Who Spent the Most Out of Pocket?</h2>
+                    </div>
+                    <div class="chart-container blur-effect">
+                        <div class="bars" id="paid-bars"></div>
+                    </div>
+                </section>
+
+                <!-- All Transactions -->
+                <section class="section">
+                    <div class="section-title">
+                        <h2>Every Trip Receipt</h2>
+                        <p>Complete historical ledger. No details left out.</p>
+                    </div>
+                    <div class="transactions-container" id="transactions-list"></div>
+                </section>
+            </div>
+
         </main>
     </div>
 
-    <!-- Settlement Details Modal -->
-    <div class="modal-overlay" id="settlement-modal">
-        <div class="modal-content blur-effect">
-            <button class="modal-close" id="modal-close">&times;</button>
-            <div class="modal-header">
-                <h3 id="modal-title">Why do they pay?</h3>
-                <p id="modal-subtitle" class="modal-subtitle"></p>
-            </div>
-            <div class="modal-body" id="modal-body">
-                <!-- Dynamic reason list goes here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- The actual raw data is passed into the script -->
     <script src="app.js"></script>
 </body>
 </html>
