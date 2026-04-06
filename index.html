@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaipur Expenses</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header blur-effect">
+            <div class="logo">
+                <h1>Jaipur Expenses</h1>
+                <p>Trip settlement analysis dashboard</p>
+            </div>
+            <div class="total-badge">
+                <span class="label">Total Spend</span>
+                <span class="amount" id="total-spend">₹0</span>
+            </div>
+        </header>
+
+        <main class="dashboard">
+            <!-- Balances Section -->
+            <section class="section">
+                <div class="section-title">
+                    <h2>Final Balances</h2>
+                </div>
+                <div class="card-grid" id="balances-grid">
+                    <!-- Dynamic Balance Cards -->
+                </div>
+            </section>
+
+            <!-- Settlements Section -->
+            <section class="section">
+                <div class="section-title">
+                    <h2>Suggested Settlements</h2>
+                    <p>The easiest way to square up everyone's debt.</p>
+                </div>
+                <div class="settlements-list" id="settlements-list">
+                    <!-- Dynamic Settlement Items -->
+                </div>
+            </section>
+
+            <!-- Paid By Section -->
+            <section class="section">
+                <div class="section-title">
+                    <h2>Who Paid What?</h2>
+                </div>
+                <div class="chart-container blur-effect">
+                    <div class="bars" id="paid-bars">
+                        <!-- Dynamic Progress Bars -->
+                    </div>
+                </div>
+            </section>
+        
+    <section class="section"><div class="section-title"><h2>All Expenses</h2></div>
+    <div class="blur-effect" style="border-radius:16px;overflow:hidden;padding:1rem;">
+    <table style="width:100%;text-align:left;border-collapse:collapse;">
+    <thead><tr style="border-bottom:1px solid rgba(255,255,255,0.1)"><th style="padding:1rem">Item</th><th style="padding:1rem">Amount</th><th style="padding:1rem">Paid By</th><th style="padding:1rem">Shared With</th></tr></thead>
+    <tbody id="expenses-table-body"></tbody>
+    </table></div></section>
+    </main>
+    
+    </div>
+
+    <!-- The actual raw data is passed into the script -->
+    <script src="app.js"></script>
+</body>
+</html>
