@@ -74,12 +74,22 @@ body {
 
 /* Settlements */
 .settlements-list { display: flex; flex-direction: column; gap: 1rem; }
-.settle-item { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.5rem; border-radius: 12px; }
-.settle-roles { display: flex; align-items: center; gap: 1rem; font-weight: 600; font-size: 1.1rem; }
+.settle-item { 
+    display: flex; align-items: center; justify-content: space-between; 
+    padding: 1.2rem 1.5rem; border-radius: 12px; cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+.settle-item:hover {
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    transform: scale(1.01);
+}
+.settle-roles { display: flex; align-items: center; gap: 1rem; font-weight: 600; font-size: 1.1rem; pointer-events: none;}
 .settle-roles .arrow { color: var(--text-secondary); font-size: 1.2rem; }
 .bad-red { color: #ef4444; }
 .good-green { color: #10b981; }
-.settle-amount { font-size: 1.3rem; font-weight: 800; color: #fff; background: var(--primary-gradient); padding: 0.4rem 1rem; border-radius: 8px; }
+.settle-amount { font-size: 1.3rem; font-weight: 800; color: #fff; background: var(--primary-gradient); padding: 0.4rem 1rem; border-radius: 8px; pointer-events: none;}
 
 /* Progress Bars */
 .chart-container { padding: 2rem; border-radius: 16px; }
@@ -101,7 +111,7 @@ body {
 .tx-icon {
     width: 45px; height: 45px; background: rgba(59, 130, 246, 0.2);
     border-radius: 12px; display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem; color: #3b82f6;
+    font-size: 1.4rem; color: #3b82f6; flex-shrink: 0;
 }
 .tx-info { display: flex; flex-direction: column; gap: 0.3rem; }
 .tx-info strong { font-size: 1.1rem; color: var(--text-primary); }
@@ -112,6 +122,46 @@ body {
 .tx-amt { font-size: 1.2rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.3rem; }
 .tx-split { font-size: 0.85rem; color: var(--text-secondary); max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; }
 
+/* Modal Styles */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 1000; opacity: 0; transition: opacity 0.3s ease;
+}
+.modal-overlay.active { display: flex; opacity: 1; }
+.modal-content {
+    background: var(--bg-color); width: 90%; max-width: 500px;
+    border-radius: 20px; padding: 2rem; position: relative;
+    max-height: 85vh; overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    transform: translateY(20px); transition: transform 0.3s ease;
+}
+.modal-overlay.active .modal-content { transform: translateY(0); }
+.modal-close {
+    position: absolute; top: 1.2rem; right: 1.5rem;
+    background: none; border: none; font-size: 2rem;
+    color: var(--text-secondary); cursor: pointer; transition: color 0.2s;
+}
+.modal-close:hover { color: var(--danger); }
+.modal-header { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--card-border); }
+.modal-header h3 { font-size: 1.5rem; margin-bottom: 0.3rem; }
+.modal-subtitle { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.4; }
+
+.modal-tx-item { 
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); 
+}
+.modal-tx-item:last-child { border-bottom: none; }
+.modal-tx-item-left { display: flex; flex-direction: column; }
+.modal-tx-name { font-weight: 500; font-size: 1rem; }
+.modal-tx-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem;}
+.modal-tx-amt { font-weight: 800; font-size: 1.1rem; color: var(--danger); }
+.modal-tx-amt.positive { color: var(--success); }
+.modal-summary-box { background: rgba(59, 130, 246, 0.15); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;}
+.modal-summary-box h4 { margin-bottom: 0.5rem; color: #3b82f6;}
+
+
 @media (max-width: 768px) {
     .header { flex-direction: column; align-items: flex-start; gap: 1rem; }
     .total-badge { text-align: left; }
@@ -119,4 +169,5 @@ body {
     .tx-card { flex-direction: column; align-items: flex-start; gap: 1rem; }
     .tx-right { text-align: left; width: 100%; }
     .tx-split { max-width: 100%; white-space: normal; }
+    .modal-content { padding: 1.5rem; }
 }

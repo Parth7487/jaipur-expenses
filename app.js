@@ -1,3 +1,4 @@
+// The exact parsed CSV items are stored here
 const csvData = `Item Name,Amount,Share per person,Paid By,Owed People,Owed By,Comments
 Vadodara dinner day,630,210,Mommy,"Daddy, Mommy, Vipul",Mommy /Daddy/Vipul,
 Vadodara to jaipur bus,2940,1470,Mommy,"Chris, Vishu",Vishu/Chris,
@@ -73,11 +74,11 @@ jodhpur dorm,1254,627,Mommy,"Chris, Vishu",Vishu/Chris,
 Vishu airbnb advance (4),1000,1000,Vishu,,,
 Chris Airbnb advance(4),1000,1000,Chris,,,`;
 
-// Custom CSV split that handles quotes
+// Parse CSV strings easily handling commas and quotes
 function parseCSV(csvText) {
     const lines = csvText.split('\n').filter(l => l.trim() !== '');
     const expenses = [];
-    for(let i=1; i<lines.length; i++){
+    for (let i=1; i<lines.length; i++) {
         let match = lines[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
         if(!match) {
             match = lines[i].split(',');
@@ -88,26 +89,33 @@ function parseCSV(csvText) {
         let item = match[0] || 'Unknown';
         let amountStr = match[1];
         let paidBy = match[3] || '';
-        let owedPeople = match[4] || '';
+        let owedPeopleRaw = match[4] || '';
         
         if (!amountStr) continue;
         let amt = parseFloat(amountStr);
         if (isNaN(amt)) continue;
         
         // Clean strings
-        owedPeople = owedPeople.replace(/"/g, '').trim();
+        let owedPeople = owedPeopleRaw.replace(/"/g, '').trim();
         if (owedPeople === '') {
-            owedPeople = paidBy; // if no split specified
+            owedPeople = paidBy;
         }
 
-        expenses.push({ item, amount: amt, paidBy: paidBy.trim(), owedPeople });
+        const splitArr = owedPeople.split(',').map(s => s.trim()).filter(s => s);
+        
+        expenses.push({ 
+            item, 
+            amount: amt, 
+            paidBy: paidBy.trim(), 
+            owedPeople,
+            splitArr 
+        });
     }
     return expenses;
 }
 
 const expenses = parseCSV(csvData);
 
-// Basic stats fallback (computed from memory logic in backend)
 const tripData = {
     totalSpend: 56382.00,
     paidBy: [
@@ -132,7 +140,85 @@ const tripData = {
     ]
 };
 
+// Open Modal with Breakdown Context
+function openModal(debtor, creditor, amount) {
+    const modal = document.getElementById('settlement-modal');
+    document.getElementById('modal-title').innerHTML = `<span class="bad-red">${debtor}</span> → <span class="good-green">${creditor}</span>`;
+    
+    // Find all exact costs paid by creditor where debtor was involved
+    const itemsOwed = [];
+    let exactOwedAmt = 0;
+    
+    expenses.forEach(ex => {
+        if (ex.paidBy === creditor && ex.splitArr.includes(debtor)) {
+            const share = ex.amount / ex.splitArr.length;
+            exactOwedAmt += share;
+            itemsOwed.push({
+                item: ex.item,
+                fullAmt: ex.amount,
+                myShare: share
+            });
+        }
+    });
+
+    // Also look for inverse (paid by debtor, creditor split) to find true net
+    let debtorPaidForCreditor = 0;
+    expenses.forEach(ex => {
+        if (ex.paidBy === debtor && ex.splitArr.includes(creditor)) {
+            const share = ex.amount / ex.splitArr.length;
+            debtorPaidForCreditor += share;
+        }
+    });
+
+    const netDirect = exactOwedAmt - debtorPaidForCreditor;
+
+    const modalBody = document.getElementById('modal-body');
+    let html = `
+        <div class="modal-summary-box">
+            <h4>Simplified Debt Transfer</h4>
+            <p style="font-size: 0.9rem; margin-bottom: 0.8rem">This group repayment simplifies all underlying debts. Both users have an outstanding overall trip balance. To resolve it fastest:</p>
+            <strong style="font-size: 1.1rem">Total paid in this transfer: ₹${amount.toLocaleString('en-IN', {minimumFractionDigits:2})}</strong>
+        </div>
+        <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: #f8fafc">Specific items ${creditor} paid for ${debtor}:</h4>
+        <div style="margin-bottom: 1rem">
+    `;
+
+    if (itemsOwed.length === 0) {
+        html += `<p style="color: #94a3b8; font-style: italic">No direct expenses found - this transfer clears general group debt!</p>`;
+    } else {
+        itemsOwed.forEach(i => {
+            html += `
+            <div class="modal-tx-item">
+                <div class="modal-tx-item-left">
+                    <span class="modal-tx-name">${i.item}</span>
+                    <span class="modal-tx-sub">Total cost: ₹${i.fullAmt.toLocaleString('en-IN')}</span>
+                </div>
+                <div class="modal-tx-amt">₹${i.myShare.toLocaleString('en-IN', {minimumFractionDigits: 2})}</div>
+            </div>`;
+        });
+    }
+    
+    html += `</div>`;
+
+    if (exactOwedAmt > 0) {
+        html += `<p style="text-align: right; font-size: 0.9rem; color: var(--text-secondary)">Total Direct: <b>₹${exactOwedAmt.toLocaleString('en-IN', {minimumFractionDigits: 2})}</b></p>`;
+    }
+
+    modalBody.innerHTML = html;
+    modal.classList.add('active');
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+    // Modal Closure logic
+    document.getElementById('modal-close').addEventListener('click', () => {
+        document.getElementById('settlement-modal').classList.remove('active');
+    });
+    document.getElementById('settlement-modal').addEventListener('click', (e) => {
+        if(e.target.id === 'settlement-modal') {
+            document.getElementById('settlement-modal').classList.remove('active');
+        }
+    });
+
     // 1) Render Header Totals
     document.getElementById("total-spend").textContent = `₹${tripData.totalSpend.toLocaleString('en-IN', {minimumFractionDigits:2})}`;
 
@@ -149,11 +235,15 @@ document.addEventListener("DOMContentLoaded", () => {
         balancesGrid.appendChild(c);
     });
 
-    // 3) Render Settlements
+    // 3) Render Settlements (now clickable)
     const settlementsList = document.getElementById("settlements-list");
     tripData.settlements.forEach(s => {
         const item = document.createElement("div");
         item.className = "settle-item blur-effect";
+        
+        // Setup click listener
+        item.addEventListener("click", () => openModal(s.from, s.to, s.amount));
+
         item.innerHTML = `
             <div class="settle-roles">
                 <span class="bad-red">${s.from}</span>
@@ -186,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 5) Generate Detailed Transactions List
     const txContainer = document.getElementById("transactions-list");
     if(txContainer){
-        expenses.forEach((e, i) => {
+        expenses.forEach((e) => {
             const card = document.createElement("div");
             card.className = "tx-card blur-effect";
             card.innerHTML = `
@@ -206,7 +296,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Delay animations for visual flair
     setTimeout(() => {
         document.querySelectorAll('.bar-fill').forEach(el => {
             el.style.width = el.getAttribute('data-width');
