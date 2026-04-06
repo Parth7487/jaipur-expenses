@@ -9,11 +9,7 @@
     --danger: #ef4444;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     font-family: 'Inter', sans-serif;
@@ -32,202 +28,95 @@ body {
     border: 1px solid var(--card-border);
 }
 
-.app-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-}
+.app-container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 2rem;
-    border-radius: 20px;
-    margin-bottom: 3rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 2rem; border-radius: 20px;
+    margin-bottom: 3rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .logo h1 {
-    font-size: 1.8rem;
-    font-weight: 800;
+    font-size: 1.8rem; font-weight: 800;
     background: var(--primary-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     margin-bottom: 0.2rem;
 }
 
-.logo p {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-.total-badge {
-    text-align: right;
-}
-
-.total-badge .label {
-    display: block;
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
+.logo p { color: var(--text-secondary); font-size: 0.9rem; }
+.total-badge { text-align: right; }
+.total-badge .label { display: block; color: var(--text-secondary); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
 .total-badge .amount {
-    font-size: 2rem;
-    font-weight: 800;
+    font-size: 2.2rem; font-weight: 800;
     background: var(--primary-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 
-.section {
-    margin-bottom: 4rem;
-}
+.section { margin-bottom: 4rem; }
+.section-title { margin-bottom: 1.5rem; }
+.section-title h2 { font-size: 1.4rem; font-weight: 600; color: var(--text-primary); }
+.section-title p { color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.3rem; }
 
-.section-title {
-    margin-bottom: 1.5rem;
-}
-
-.section-title h2 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.section-title p {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    margin-top: 0.2rem;
-}
-
-/* Balances Grid */
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
-}
-
+/* Balances */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
 .balance-card {
-    padding: 1.5rem;
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    padding: 1.5rem; border-radius: 16px;
+    display: flex; flex-direction: column; justify-content: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
-.balance-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-}
-
-.balance-card .name {
-    font-weight: 600;
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-}
-
-.balance-card .bal {
-    font-size: 1.5rem;
-    font-weight: 800;
-}
-
+.balance-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); }
+.balance-card .name { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.5rem; }
+.balance-card .bal { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.2rem; }
 .bal-positive .bal { color: var(--success); }
 .bal-negative .bal { color: var(--danger); }
 .bal-positive .status { color: var(--success); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
 .bal-negative .status { color: var(--danger); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
 
 /* Settlements */
-.settlements-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
+.settlements-list { display: flex; flex-direction: column; gap: 1rem; }
+.settle-item { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.5rem; border-radius: 12px; }
+.settle-roles { display: flex; align-items: center; gap: 1rem; font-weight: 600; font-size: 1.1rem; }
+.settle-roles .arrow { color: var(--text-secondary); font-size: 1.2rem; }
+.bad-red { color: #ef4444; }
+.good-green { color: #10b981; }
+.settle-amount { font-size: 1.3rem; font-weight: 800; color: #fff; background: var(--primary-gradient); padding: 0.4rem 1rem; border-radius: 8px; }
 
-.settle-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.2rem 1.5rem;
-    border-radius: 12px;
-}
+/* Progress Bars */
+.chart-container { padding: 2rem; border-radius: 16px; }
+.bar-row { margin-bottom: 1.5rem; }
+.bar-row:last-child { margin-bottom: 0; }
+.bar-header { display: flex; justify-content: space-between; margin-bottom: 0.6rem; font-weight: 600; font-size: 1.05rem;}
+.bar-bg { width: 100%; height: 12px; background: rgba(255, 255, 255, 0.1); border-radius: 6px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--primary-gradient); border-radius: 6px; width: 0%; }
 
-.settle-roles {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    font-weight: 600;
-    font-size: 1.1rem;
+/* Detailed Transactions responsive cards */
+.transactions-container { display: flex; flex-direction: column; gap: 1rem; }
+.tx-card {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem; border-radius: 14px;
+    transition: background 0.3s ease;
 }
+.tx-card:hover { background: rgba(59, 130, 246, 0.1); }
+.tx-left { display: flex; align-items: center; gap: 1rem; }
+.tx-icon {
+    width: 45px; height: 45px; background: rgba(59, 130, 246, 0.2);
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; color: #3b82f6;
+}
+.tx-info { display: flex; flex-direction: column; gap: 0.3rem; }
+.tx-info strong { font-size: 1.1rem; color: var(--text-primary); }
+.tx-info span { font-size: 0.85rem; color: var(--text-secondary); }
+.tx-info span b { color: #8b5cf6; }
 
-.settle-roles .arrow {
-    color: var(--text-secondary);
-    font-size: 1.2rem;
-}
-
-.settle-amount {
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: #fff;
-    background: var(--primary-gradient);
-    padding: 0.4rem 1rem;
-    border-radius: 8px;
-}
-
-/* Paid By Bars */
-.chart-container {
-    padding: 2rem;
-    border-radius: 16px;
-}
-
-.bar-row {
-    margin-bottom: 1.5rem;
-}
-
-.bar-row:last-child {
-    margin-bottom: 0;
-}
-
-.bar-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-}
-
-.bar-bg {
-    width: 100%;
-    height: 12px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-.bar-fill {
-    height: 100%;
-    background: var(--primary-gradient);
-    border-radius: 6px;
-    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-    width: 0%; /* Animates to target width via JS */
-}
+.tx-right { text-align: right; }
+.tx-amt { font-size: 1.2rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.3rem; }
+.tx-split { font-size: 0.85rem; color: var(--text-secondary); max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; }
 
 @media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-    }
-    
-    .total-badge {
-        text-align: left;
-    }
-    
-    .settle-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-    }
+    .header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .total-badge { text-align: left; }
+    .settle-item { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .tx-card { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .tx-right { text-align: left; width: 100%; }
+    .tx-split { max-width: 100%; white-space: normal; }
 }

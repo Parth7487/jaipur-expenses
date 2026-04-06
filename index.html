@@ -56,15 +56,18 @@
                     </div>
                 </div>
             </section>
-        
-    <section class="section"><div class="section-title"><h2>All Expenses</h2></div>
-    <div class="blur-effect" style="border-radius:16px;overflow:hidden;padding:1rem;">
-    <table style="width:100%;text-align:left;border-collapse:collapse;">
-    <thead><tr style="border-bottom:1px solid rgba(255,255,255,0.1)"><th style="padding:1rem">Item</th><th style="padding:1rem">Amount</th><th style="padding:1rem">Paid By</th><th style="padding:1rem">Shared With</th></tr></thead>
-    <tbody id="expenses-table-body"></tbody>
-    </table></div></section>
-    </main>
-    
+
+            <!-- Detailed Transactions -->
+            <section class="section">
+                <div class="section-title">
+                    <h2>Every Expense Item</h2>
+                    <p>Detailed breakdown of who paid for what and who it was split amongst.</p>
+                </div>
+                <div class="transactions-container" id="transactions-list">
+                    <!-- Dynamic Transaction Cards Generate Here -->
+                </div>
+            </section>
+        </main>
     </div>
 
     <!-- The actual raw data is passed into the script -->
